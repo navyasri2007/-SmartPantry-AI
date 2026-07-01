@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>My Pantry</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Add New Ingredient Form -->
+    <div class="card mb-4">
+        <div class="card-header">Add New Ingredient</div>
+        <div class="card-body">
+            <form method="POST" action="/add_pantry" class="row g-3">
+                <div class="col-md-4">
+                    <input type="text" name="ingredient_name" class="form-control" placeholder="Ingredient Name" required>
+                </div>
+                <div class="col-md-2">
+                    <input type="number" name="quantity" step="0.01" class="form-control" placeholder="Qty" required>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="unit" class="form-control" placeholder="Unit (kg, pcs, L)" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="date" name="expiry_date" class="form-control" required>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-success">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pantry Items Table -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ingredient</th>
+                <th>Quantity</th>
+                <th>Expiry Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item[2] }}</td>
+                <td>{{ item[3] }} {{ item[4] }}</td>
+                <td>{{ item[5] }}</td>
+                <td>
+                    <a href="/delete_pantry/{{ item[0] }}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Delete this item?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+{% endblock %}
