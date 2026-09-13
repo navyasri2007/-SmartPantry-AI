@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="hero">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Welcome to SmartPantry AI</h1>
+        <p class="lead mt-3">Reduce food waste with intelligent pantry management and recipe suggestions</p>
+        <div class="mt-4">
+            <a href="/register" class="btn btn-light btn-lg me-3">Get Started - Register</a>
+            <a href="/login" class="btn btn-outline-light btn-lg">Login</a>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row text-center">
+        <div class="col-md-4">
+            <i class="fas fa-utensils fa-3x text-success mb-3"></i>
+            <h4>Smart Recommendations</h4>
+            <p>Get recipes based on what you already have</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fas fa-clock fa-3x text-success mb-3"></i>
+            <h4>Expiry Alerts</h4>
+            <p>Never waste food again</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fas fa-chart-bar fa-3x text-success mb-3"></i>
+            <h4>Track Savings</h4>
+            <p>See how much money you're saving</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

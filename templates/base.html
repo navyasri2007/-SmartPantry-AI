@@ -5,26 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartPantry AI</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .hero {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+    </style>
 </head>
 <body>
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container">
-            <a class="navbar-brand" href="#">🍎 SmartPantry AI</a>
+            <a class="navbar-brand" href="/">SmartPantry AI</a>
+            
+            {% if session.user_id %}
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3">Hi, {{ session.username }}!</span>
+                <a href="/dashboard" class="nav-link">Dashboard</a>
+                <a href="/pantry" class="nav-link">Pantry</a>
+                <a href="/recipes" class="nav-link">Recipes</a>
+                <a href="/logout" class="nav-link text-white fw-bold ms-3">Logout</a>
+                <a href="/shopping_list" class="nav-link">Shopping List</a>
+            </div>
+            {% endif %}
         </div>
     </nav>
 
     <div class="container mt-4">
         {% block content %}{% endblock %}
     </div>
+
+    <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show mx-3" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

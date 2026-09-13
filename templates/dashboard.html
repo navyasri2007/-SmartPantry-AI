@@ -3,6 +3,7 @@
 <div class="container mt-4">
     <h1>Welcome back, {{ username }}! 👋</h1>
     
+    <!-- Stats Cards -->
     <div class="row mt-4">
         <div class="col-md-4">
             <div class="card text-white bg-success mb-3">
@@ -66,5 +67,48 @@
     <div class="mt-4">
         <a href="/recipes" class="btn btn-success btn-lg">Get Smart Recipe Recommendations →</a>
     </div>
+
+    <!-- Chart -->
+    <h3 class="mt-5">Pantry Status Overview</h3>
+    <div style="max-width: 420px; margin: 0 auto;">
+        <canvas id="pantryChart" height="300"></canvas>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('pantryChart');
+        
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Urgent', 'Expiring Soon', 'Good'],
+                datasets: [{
+                    data: [
+                        {% for row in status_data %}{% if row[0] == 'Urgent' %}{{ row[1] }}{% endif %}{% endfor %} || 0,
+                        {% for row in status_data %}{% if row[0] == 'Soon' %}{{ row[1] }}{% endif %}{% endfor %} || 0,
+                        {% for row in status_data %}{% if row[0] == 'Good' %}{{ row[1] }}{% endif %}{% endfor %} || 0
+                    ],
+                    backgroundColor: ['#dc3545', '#ffc107', '#28a745']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { 
+                        position: 'bottom',
+                        labels: { padding: 20, font: { size: 15 } }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Pantry Health Distribution',
+                        font: { size: 18 }
+                    }
+                }
+            }
+        });
+    });
+</script>
 {% endblock %}
